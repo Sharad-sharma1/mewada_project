@@ -681,7 +681,7 @@ def show_premium_user(request):
     try:
         head = ['Name','Middle Name','Surname','Area','Village','Mobile No 1','Mobile No 2','Address', 'Expired', 'Receipt No', 'Receipt Date']
         usertable = Premium_User_Table.objects.all().select_related()
-        myfilter = OderFilter(request.GET, queryset=usertable)
+        myfilter = OderFilter2(request.GET, queryset=usertable)
         usertable = myfilter.qs
         return render(request, 'premium/show_premium_user.html', {'usertable':usertable, 'head':head, 'myfilter':myfilter})
     except Exception as e:

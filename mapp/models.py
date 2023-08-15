@@ -59,7 +59,7 @@ class Main_User_Table(models.Model):
   modified_date = models.DateTimeField(auto_now=True)
   active_flag = models.CharField(max_length=10, default='Active',choices=[('Sifted', 'Sifted'), ('Deleted', 'Deleted')])
   delete_flag = models.CharField(max_length=6, blank=True,choices=choice)
-  death_flag = models.CharField(max_length=6, blank=True,choices=choice)
+  death_flag = models.CharField(max_length=6, blank=True,choices=choice, default='No')
   receipt_flag = models.CharField(max_length=6, blank=True,choices=choice)
   receipt_no = models.CharField(max_length=20, blank=True)
   receipt_date = models.DateField(default='2001-11-1')
@@ -82,9 +82,9 @@ class Premium_User_Table(models.Model):
   modified_date = models.DateTimeField(auto_now=True)
   active_flag = models.CharField(max_length=10, default='Active',choices=[('Sifted', 'Sifted'), ('Deleted', 'Deleted')])
   delete_flag = models.CharField(max_length=6, blank=True,choices=choice)
-  death_flag = models.CharField(max_length=6, blank=True,choices=choice)
+  death_flag = models.CharField(max_length=6, blank=True,choices=choice, default='No')
   receipt_no = models.CharField(max_length=20, blank=True)
-  receipt_date = models.DateField(default='2001-11-1', null=True, blank=True)
+  receipt_date = models.DateField(default='2001-11-1')
 
   def __str__(self):
     return '%s %s %s %s' %(self.name, self.father_or_husband_name, self.area, self.village)

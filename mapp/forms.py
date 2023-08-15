@@ -102,7 +102,7 @@ class Update_User_Form(forms.ModelForm):
         
         fields = [
             'name','father_or_husband_name','mother_name','surname','birth_date', 'gender','mobile_no1',
-            'mobile_no2','email_id','active_flag','address','pincode','area','village','country','state'
+            'mobile_no2','email_id','active_flag','address','pincode','area','village','country','state','receipt_date'
         ]
         labels = { 
             'usercode': 'User Code',
@@ -228,8 +228,8 @@ class Update_Premium_User_Form(forms.ModelForm):
             'area':forms.Select(attrs={'class':'form-control form-select'}),
             'village':forms.Select(attrs={'class':'form-control form-select'}),
             'address':forms.TextInput(attrs={'class':'form-control'}),
-            'death_flag':forms.TextInput(attrs={'class':'form-control'}),
+            'death_flag':forms.Select(choices=choice,attrs={'class':'form-control form-select'}),
             'receipt_no':forms.TextInput(attrs={'class':'form-control'}),
-            'receipt_date':forms.TextInput(attrs={'class':'form-control'})
+            'receipt_date':DateInput(attrs={'class':'form-control'})
         }
 
