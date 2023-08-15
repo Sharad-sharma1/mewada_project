@@ -1,0 +1,89 @@
+{% extends 'profile_tab_base.html' %}
+{% block title %}Add Village{% endblock title %}
+{% block tab_name %}Add Village{% endblock tab_name %}
+{% block profile_tabs %}
+<div class="row">
+  <div class="col-sm-4 mt-2">
+    <h4 class="text-center alert alert-info">Add/Edit Village</h4>
+    <form action="" method="POST" novalidate>
+      {% csrf_token %}
+      {% for i in formclass %}
+        {{i.label_tag}} {{i}} 
+        <h6 class="error">{{i.errors|striptags}}</h6>
+      {% endfor %} 
+      <input type="submit" class="btn btn-primary profile-button m-1" value="Add">
+    </form>
+    {% if messages %}
+    {% for i in messages %}
+      <span {% if i.tags %} class="{{i.tags}}"  {% endif %}>{{i}}</span>
+    {% endfor %}
+    {% endif %}
+  </div>
+  <div class="col-sm-8 mt-2">
+    <h4 class="text-center alert alert-info">Village List</h4>
+    {% if userview %}
+    <table class="table table-hover">
+      <thead>
+        <tr>
+          <th scope="col">ID</th>
+          <th scope="col">village Name</th>
+          <th scope="col">Total User</th>
+          <th scope="col">Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for data in userview %}
+        <tr>
+          <th scope="row">{{data.id}}</th>
+          <td>{{data.village_name}}</td>
+          <td>{{data.usr_in_village}}</td>
+          <td>
+          <a href="{% url 'update_village' data.id %}" class="btn btn-success btn-sm">Edit</a>
+          </td>
+        </tr>
+        {% endfor userview %}
+      </tbody>
+    </table>
+    <div class="d-flex justify-content-center">
+      <nav>
+        <ul class="pagination">
+          {% if userview.has_previous %}
+          <li class="page-item">
+            <a class="page-link" href="?page={{userview.previous_page_number}}" aria-label="Previous">
+              <span aria-hidden="true">&laquo;</span>
+              <span class="sr-only">Previous</span>
+            </a>
+          </li>
+          {% endif %}
+    
+          {% for num in userview.paginator.page_range %}
+          {% if userview.number == num %}
+          <li class="page-item active" aria-current="page">
+            <span class="page-link">{{ num }}</span>
+          </li>
+          {% else %}
+          {% if num > userview.number|add:'-3' and num < userview.number|add:'3' %}
+          <li class="page-item">
+            <a class="page-link" href="?page={{ num }}">{{ num }}</a>
+          </li>
+          {% endif %}
+          {% endif %}
+          {% endfor %}
+    
+          {% if userview.has_next %}
+          <li class="page-item">
+            <a class="page-link" href="?page={{userview.next_page_number}}" aria-label="Next">
+              <span aria-hidden="true">&raquo;</span>
+              <span class="sr-only">Next</span>
+            </a>
+          </li>
+          {% endif %}
+        </ul>
+      </nav>
+    </div>
+    {% else %}
+    <h2 class="text-center alert alert-warning">No Records Found</h2>
+    {% endif %}
+  </div>
+</div>
+{% endblock profile_tabs %}

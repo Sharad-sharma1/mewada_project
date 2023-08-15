@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{% block title %}Login{% endblock title %}</title>
+  {% block script %}{% endblock script %}
+  <link rel="stylesheet" href="{% static 'auth/css/bootstrap.css' %}">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+  {% block use_css %}<link rel="stylesheet" href="{% static 'auth/css/profile_tab.css' %}">{% endblock use_css %}
+</head>
+<body class="profile-tab-body">
+  <div class="container rounded bg-white mt-4 mb-4">
+    <div class="row justify-content-center">
+        <div class="m-2">
+            <div class="p-3 py-3">
+              <div class="row mx-1 alert alert-info justify-content-center">
+                <div class="col-4 home">
+                  <a class="link-danger" href="{% url 'profile' %}">
+                    <i class="fas fa-home" style="font-size: 30px;"></i>
+                  </a>
+                </div>
+                  <div class="col-4 base">
+                    {% block tab_name %}Login{% endblock tab_name %}
+                  </div>
+                  <div class="col-4 logout">
+                    <a class="link-danger" href="{% url 'staff_logout' %}">
+                      <i class="fas fa-sign-out-alt" style="font-size: 30px;"></i>
+                    </a>
+                  </div>
+                </div>
+                  {% block profile_tabs %}Profile Tabs{% endblock profile_tabs %}
+            </div>
+        </div>
+    </div>
+  </div>
+</body>
+</html>

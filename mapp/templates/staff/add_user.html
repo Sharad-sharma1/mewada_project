@@ -1,0 +1,28 @@
+{% extends 'profile_tab_base.html' %}
+{% block title %}Add User{% endblock title %}
+{% block tab_name %}Add User Details{% endblock tab_name %}
+{% block profile_tabs %}
+<form action="" method="POST" novalidate>
+  {% csrf_token %}
+  <div class="row mt-2">
+    {% for i in add_user_form %}
+      <div class="col-md-6">
+        {{i.label_tag}} {{i}} 
+        <h6 class="error">{{i.errors|striptags}}</h6>
+      </div>
+    {% endfor %}
+  </div>
+<div class="col text-center mt-1">
+  {% if messages %}
+  {% for i in messages %}
+    <span {% if i.tags %} class="{{i.tags}}"  {% endif %}>{{i}}</span>
+  {% endfor %}
+  {% endif %}
+</div>
+<div class="row mt-1">
+  <div class="col text-center">
+    <input class="btn btn-primary profile-button m-1" value="Save" type="submit">
+  </div>
+</div>
+</form>
+{% endblock profile_tabs %}

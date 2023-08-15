@@ -1,0 +1,59 @@
+{% extends 'profile_tab_base.html' %}
+{% load static %}
+{% block title %}Show User{% endblock title %}
+{% block use_css %}<link rel="stylesheet" href="{% static 'auth/css/show_user.css' %}">{% endblock use_css %}
+{% block tab_name %}User List{% endblock tab_name %}
+{% block profile_tabs %}
+<div class="container">
+<form action="" method="get" novalidate>
+  <div class="row mt-2">
+    {% for i in myfilter.form %}
+    <div class="col-md-2">
+    {{i.label_tag}} {{i}}
+  </div>
+    {% endfor head %}
+</div>
+<input class="btn btn-primary mt-2" type="submit" value="Search">
+</form>
+</div>
+<div class="col-sm-12 mt-2">
+  {% if usertable %}
+  <div class="container tbl-container">
+  <div class="tbl-fixed">
+  <table class="table table-hover table-condensed">
+    <thead >
+      <tr>
+        <th scope="col">Action</th>
+        {% for i in head %}
+        <th scope="col">{{i}}</th>
+        {% endfor head %}
+      </tr>
+    </thead>
+    <tbody>
+      {% for data in usertable %}
+      <tr>
+        <td>
+          <a href="{% url 'update_premium_user' data.id %}" class="btn btn-success btn-sm">Edit</a>
+        </td>
+        <td>{{data.name}}</td>
+        <td>{{data.father_or_husband_name}}</td>
+        <td>{{data.surname}}</td>
+        <td>{{data.area.area_name}}</td>
+        <td>{{data.village.village_name}}</td>
+        <td>{{data.mobile_no1}}</td>
+        <td>{{data.mobile_no2}}</td>
+        <td>{{data.address}}</td>
+        <td>{{data.death_flag}}</td>
+        <td>{{data.receipt_no}}</td>
+        <td>{{data.receipt_date}}</td>
+      </tr>
+      {% endfor usertable %}
+    </tbody>
+  </table>
+</div>
+</div>
+  {% else %}
+  <h2 class="text-center alert alert-warning">No Records Found</h2>
+  {% endif %}
+</div>
+{% endblock profile_tabs %}

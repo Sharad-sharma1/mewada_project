@@ -1,0 +1,10 @@
+<option value="">--Select--</option>
+{% if filter_with == "village" %}
+  {% for i in filter_val %}
+    <option value="{{ i.pk }}">{{ i.village_name }}</option>
+  {% endfor %}
+{% elif filter_with == "area" %}
+  {% for i in filter_val %}
+    <option value="{{ i.pk }}">{{ i.area_name }}</option>
+  {% endfor %}
+{% endif %}

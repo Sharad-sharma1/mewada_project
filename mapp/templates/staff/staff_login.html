@@ -1,0 +1,15 @@
+{% extends 'login_page_base.html' %}
+{% block title %}Staff Login{% endblock title %}
+
+{% block login %}  
+  {% for i in auth_form %}
+    {{i.label_tag}} {{i}} 
+    <h6 class="error">{{i.errors|striptags}}</h6>
+  {% endfor %}
+  {% if auth_form.non_field_errors %}
+    {% for i in auth_form.non_field_errors %}
+    <h6 class="error">{{i}}</h6>
+    {% endfor %}
+  {% endif %}
+    <input class="btn btn-success w-100" type="submit" id="loginn" value="Login">
+{% endblock login %} 

@@ -1,0 +1,29 @@
+{% extends 'profile_tab_base.html' %}
+{% block title %}{{update_head}}{% endblock title %}
+{% block tab_name %}{{update_head}}{% endblock tab_name %}
+{% block profile_tabs %}
+  <form action="" method="POST" novalidate>
+      {% csrf_token %}
+      <div class="row mt-2">
+        {% for i in updateclass %}
+        <div class="col-md-6">
+          {{i.label_tag}} {{i}} 
+          <h6 class="error">{{i.errors|striptags}}</h6>
+        </div>
+        {% endfor %}
+        </div>
+    <div class="row justify-content-center">
+      {% if messages %}
+      {% for i in messages %}
+        <span {% if i.tags %} class="{{i.tags}}"  {% endif %}>{{i}}</span>
+      {% endfor %}
+      {% endif %}
+    </div>
+    <div class="row justify-content-center">
+      <div class="col-2 mt-2">
+        <input type="submit" class="btn btn-primary profile-button m-1" value="Update">
+      <a href="{{update_back_btn}}" class="btn btn-primary profile-button m-1">Back</a>
+      </div>
+    </div>
+</form>
+{% endblock profile_tabs %}

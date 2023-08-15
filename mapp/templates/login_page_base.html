@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <title>{% block title %}Login{% endblock title %}</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'auth/css/bootstrap.css' %}">
+    <link rel="stylesheet" href="{% static 'auth/css/user.css' %}">
+</head>
+<body>
+    <div class="login">
+        <h1 class="text-center">Login</h1>
+        <form action="" method="POST" novalidate>
+            {% csrf_token %}
+              {% block login %}  
+              {% endblock login %}  
+        </form>
+    </div>
+</body>
+</html>
