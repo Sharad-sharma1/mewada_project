@@ -51,6 +51,13 @@ def download_sticker_pdf(request, filterr, table_data):
         fontName='Helvetica',
         fontSize=13,
     )
+    custom_style2 = ParagraphStyle(
+        name='custom_style',
+        parent=getSampleStyleSheet()['Normal'],
+        fontName='Helvetica',
+        fontSize=13,
+        textColor=colors.lightcoral,
+    )
 
     lines = []
     main_data = []
@@ -65,25 +72,35 @@ def download_sticker_pdf(request, filterr, table_data):
             village_name = "Village: " + i.village.village_name
             Area_name = "Area: " + i.area.area_name.capitalize()
             if table_data == "Main_User_Table":
-              address_lines = Paragraph(
-                  "Usercode: " + i.usercode + " <b>" + " <br/>" + name + "</b> " + " <br/>" +
-                  i.address + ' ' + i.state + " " + " <br/>" +
-                  "Mobile: " + i.mobile_no1 + ' / ' + i.mobile_no2 + " <br/>" +
-                  "Pincode: " + i.pincode + " <br/>" +
-                  "<b>" + Area_name + "</b>" + " <br/>" +
-                  village_name ,
-                  custom_style
-              )
+                address_lines = Paragraph(
+                      "Usercode: " + i.usercode + " <b>" + " <br/>" + name + "</b> " + " <br/>" +
+                      i.address + ' ' + i.state + " " + " <br/>" +
+                      "Mobile: " + i.mobile_no1 + ' / ' + i.mobile_no2 + " <br/>" +
+                      "Pincode: " + i.pincode + " <br/>" +
+                      "<b>" + Area_name + "</b>" + " <br/>" +
+                      village_name,
+                      custom_style
+                  )
             else:
-              address_lines = Paragraph(
-                        "<b>" + name + "</b> " +  " <br/>" +
-                        i.address + ' <br/>' +
-                        "Mobile: " + i.mobile_no1 + ' / ' + i.mobile_no2 + " <br/>" +
-                        "<b>" + Area_name + "</b>" + " <br/>" +
-                        village_name,
-                        custom_style
-                    )
-
+                if i.death_flag == "Yes":
+                  address_lines = Paragraph(
+                              "<b>" + name + "</b> " +  " <br/>" +
+                              i.address + ' <br/>' +
+                              "Mobile: " + i.mobile_no1 + ' / ' + i.mobile_no2 + " <br/>" +
+                              "<b>" + Area_name + "</b>" + " <br/>" +
+                              "<b>" + village_name + "</b>" + " <br/>" +
+                              "<b>" + "Expired" + "</b>",
+                              custom_style2
+                          )
+                else:
+                   address_lines = Paragraph(
+                              "<b>" + name + "</b> " +  " <br/>" +
+                              i.address + ' <br/>' +
+                              "Mobile: " + i.mobile_no1 + ' / ' + i.mobile_no2 + " <br/>" +
+                              "<b>" + Area_name + "</b>" + " <br/>" +
+                              village_name, 
+                              custom_style
+                          )
   
             if len(lines) == 0 or len(lines[-1]) == 2:
                 lines.append([address_lines])
@@ -94,7 +111,7 @@ def download_sticker_pdf(request, filterr, table_data):
 
     for idx, table in enumerate(main_data):
         col_widths = [270]
-        table1 = Table(table, colWidths=col_widths, repeatRows=1)
+        table1 = Table(table, colWidths=col_widths)
         table1.setStyle(style_table)
         elements.append(table1)
 
@@ -136,6 +153,13 @@ def download_split_sticker_pdf(request, filterr, table_data):
         fontName='Helvetica',
         fontSize=13,
     )
+    custom_style2 = ParagraphStyle(
+        name='custom_style',
+        parent=getSampleStyleSheet()['Normal'],
+        fontName='Helvetica',
+        fontSize=13,
+        textColor=colors.lightcoral,
+    )
 
     lines = []
     main_data = []
@@ -165,24 +189,35 @@ def download_split_sticker_pdf(request, filterr, table_data):
             village_name = "Village: " + i.village.village_name
             Area_name = "Area: " + i.area.area_name.capitalize()
             if table_data == "Main_User_Table":
-              address_lines = Paragraph(
-                  "Usercode: " + i.usercode + " <b>" + " <br/>" + name + "</b> " + " <br/>" +
-                  i.address + ' ' + i.state + " " + " <br/>" +
-                  "Mobile: " + i.mobile_no1 + ' / ' + i.mobile_no2 + " <br/>" +
-                  "Pincode: " + i.pincode + " <br/>" +
-                  "<b>" + Area_name + "</b>" + " <br/>" +
-                  village_name ,
-                  custom_style
-              )
+                address_lines = Paragraph(
+                      "Usercode: " + i.usercode + " <b>" + " <br/>" + name + "</b> " + " <br/>" +
+                      i.address + ' ' + i.state + " " + " <br/>" +
+                      "Mobile: " + i.mobile_no1 + ' / ' + i.mobile_no2 + " <br/>" +
+                      "Pincode: " + i.pincode + " <br/>" +
+                      "<b>" + Area_name + "</b>" + " <br/>" +
+                      village_name,
+                      custom_style
+                  )
             else:
-               address_lines = Paragraph(
-                        "<b>" + name + "</b> " +  " <br/>" +
-                        i.address + ' <br/>' +
-                        "Mobile: " + i.mobile_no1 + ' / ' + i.mobile_no2 + " <br/>" +
-                        "<b>" + Area_name + "</b>" + " <br/>" +
-                        village_name,
-                        custom_style
-                    )
+                if i.death_flag == "Yes":
+                  address_lines = Paragraph(
+                              "<b>" + name + "</b> " +  " <br/>" +
+                              i.address + ' <br/>' +
+                              "Mobile: " + i.mobile_no1 + ' / ' + i.mobile_no2 + " <br/>" +
+                              "<b>" + Area_name + "</b>" + " <br/>" +
+                              "<b>" + village_name + "</b>" + " <br/>" +
+                              "<b>" + "Expired" + "</b>",
+                              custom_style2
+                          )
+                else:
+                   address_lines = Paragraph(
+                              "<b>" + name + "</b> " +  " <br/>" +
+                              i.address + ' <br/>' +
+                              "Mobile: " + i.mobile_no1 + ' / ' + i.mobile_no2 + " <br/>" +
+                              "<b>" + Area_name + "</b>" + " <br/>" +
+                              village_name, 
+                              custom_style
+                          )
             if len(lines) == 0 or len(lines[-1]) == 2:
                 lines.append([address_lines])
             else:
@@ -192,7 +227,7 @@ def download_split_sticker_pdf(request, filterr, table_data):
 
     for idx, table in enumerate(main_data):
         col_widths = [270]
-        table1 = Table(table, colWidths=col_widths, repeatRows=1)
+        table1 = Table(table, colWidths=col_widths)
         table1.setStyle(style_table)
         elements.append(table1)
 
@@ -236,9 +271,18 @@ def download_pdf(request, filterr, table_data):
         ('GRID', (0, 0), (-1, -1), 1, colors.black),
     ])
     style_table.add('FONTSIZE', (0, 0), (-1, 0), 10)
-    normal_style = getSampleStyleSheet()['Normal']
-    # Increase the font size
-    normal_style.fontSize += 1
+    normal_style = ParagraphStyle(
+        name='custom_style',
+        parent=getSampleStyleSheet()['Normal'],
+        fontSize=11
+    )
+    normal_style2 = ParagraphStyle(
+        name='custom_style',
+        parent=getSampleStyleSheet()['Normal'],
+        fontSize=11,
+        textColor=colors.lightcoral,
+    )
+
     # Define the data for the table
     lines = []
     main_data = []
@@ -273,11 +317,19 @@ def download_pdf(request, filterr, table_data):
             mobile_no = Paragraph(i.mobile_no1 + ' ' + i.mobile_no2, normal_style)
             lines.append([usercode, member_name, mobile_no, area_name, address_lines, ''])
           else:
-            address_lines = Paragraph(i.address, normal_style)
-            member_name = Paragraph(i.name + ' ' + i.father_or_husband_name + ' ' + i.surname, normal_style)
-            area_name = Paragraph(i.area.area_name, normal_style)
-            mobile_no = Paragraph(i.mobile_no1 + ' ' + i.mobile_no2, normal_style)
-            lines.append([member_name, mobile_no, area_name, address_lines, ''])
+            if i.death_flag == "Yes":
+              address_lines = Paragraph(i.address + "Expired", normal_style2)
+              member_name = Paragraph(i.name + ' ' + i.father_or_husband_name + ' ' + i.surname, normal_style2)
+              area_name = Paragraph(i.area.area_name, normal_style2)
+              mobile_no = Paragraph(i.mobile_no1 + ' ' + i.mobile_no2, normal_style2)
+              lines.append([member_name, mobile_no, area_name, address_lines, ''])
+            else:
+              address_lines = Paragraph(i.address, normal_style)
+              member_name = Paragraph(i.name + ' ' + i.father_or_husband_name + ' ' + i.surname, normal_style)
+              area_name = Paragraph(i.area.area_name, normal_style)
+              mobile_no = Paragraph(i.mobile_no1 + ' ' + i.mobile_no2, normal_style)
+              lines.append([member_name, mobile_no, area_name, address_lines, ''])
+               
         lines.insert(0, table_head)
         main_data.append(deepcopy(lines))
 
@@ -314,7 +366,6 @@ def download_csv(request, filterr, table_data):
         filtered_data_csv = filterr[1:-1].split(', ')
         order_by_field = 'area__area_name' if filtered_data_csv[-1] == "'area'" else 'village__village_name'
         filtered_data_csv = data_table.objects.filter(pk__in=filtered_data_csv[0:-1]).order_by(order_by_field)
-
         for i in filtered_data_csv:
             if table_data == "Main_User_Table":
               member_name = i.name + ' ' + i.father_or_husband_name + ' ' + i.surname
@@ -708,4 +759,5 @@ def print_premium_user(request):
             usertable = Premium_User_Table.objects.all().order_by('village__village_name')
             downlaod_value = sorted(list(usertable.values_list('id',flat=True)))
             downlaod_value.append('village')
+        # print('iiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiii', downlaod_value)
         return render(request, 'premium/premium_download.html', {'usertable':usertable, 'head':head, 'downlaod_value': downlaod_value, 'table_data1':"Premium_User_Table"})

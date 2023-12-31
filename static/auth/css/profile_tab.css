@@ -1,0 +1,30 @@
+.profile-tab-body{
+  background: #6a9be9;
+}
+.profile-button {
+  background: #6a9be9;
+  box-shadow: none;
+  border: none
+}
+.labels {
+  font-size: 13px;
+}
+.base{
+  text-align: center;
+  font-size: x-large;
+  font-weight: bold;
+}
+.logout{
+  text-align: right;
+  font-size: large;
+}
+.home{
+  text-align: left;
+  font-size: large;
+}
+.error{
+  color: red;
+}
+.success{
+  color: green;
+}
