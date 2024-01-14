@@ -24,5 +24,7 @@ urlpatterns = [
     path('print_user/', views.print_user, name='print_user'),
     path('print_premium_user/', views.print_premium_user, name='print_premium_user'),
     path('ajax_load_data/', views.ajax_load_data, name='ajax_load_data'),
+    path('download_csvarea/', views.download_csvarea, name='download_csvarea'),
+    path('download_csvvillage/', views.download_csvvillage, name='download_csvvillage'),
     
 ]

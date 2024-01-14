@@ -7,11 +7,16 @@
     <h4 class="text-center alert alert-info">Add/Edit Village</h4>
     <form action="" method="POST" novalidate>
       {% csrf_token %}
-      {% for i in formclass %}
-        {{i.label_tag}} {{i}} 
-        <h6 class="error">{{i.errors|striptags}}</h6>
-      {% endfor %} 
-      <input type="submit" class="btn btn-primary profile-button m-1" value="Add">
+      <div class="form-group">
+        {% for i in formclass %}
+          {{i.label_tag}} {{i}} 
+          <h6 class="error">{{i.errors|striptags}}</h6>
+        {% endfor %} 
+      </div>
+      <div class="d-flex justify-content-between">
+        <input type="submit" class="btn btn-primary profile-button m-1" value="Add">
+        <a href="{% url 'download_csvvillage' %}" class="btn btn-primary profile-button m-1">User Count</a>
+      </div>
     </form>
     {% if messages %}
     {% for i in messages %}

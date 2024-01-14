@@ -19,10 +19,11 @@ from reportlab.platypus import (
     Paragraph,
     PageBreak,
 )
+from django.db.models import Count
 
 def download_sticker_pdf(request, filterr, table_data):
     response = HttpResponse(content_type='application/pdf')
-    response['Content-Disposition'] = 'attachment; filename="user.pdf"'
+    response['Content-Disposition'] = 'attachment; filename="download_sticker.pdf"'
 
     doc = SimpleDocTemplate(response, pagesize=A4, title="Download Sticker")
     elements = []
@@ -50,7 +51,9 @@ def download_sticker_pdf(request, filterr, table_data):
         parent=getSampleStyleSheet()['Normal'],
         fontName='Helvetica',
         fontSize=13,
+        
     )
+    
     custom_style2 = ParagraphStyle(
         name='custom_style',
         parent=getSampleStyleSheet()['Normal'],
@@ -72,15 +75,31 @@ def download_sticker_pdf(request, filterr, table_data):
             village_name = "Village: " + i.village.village_name
             Area_name = "Area: " + i.area.area_name.capitalize()
             if table_data == "Main_User_Table":
-                address_lines = Paragraph(
-                      "Usercode: " + i.usercode + " <b>" + " <br/>" + name + "</b> " + " <br/>" +
-                      i.address + ' ' + i.state + " " + " <br/>" +
-                      "Mobile: " + i.mobile_no1 + ' / ' + i.mobile_no2 + " <br/>" +
-                      "Pincode: " + i.pincode + " <br/>" +
-                      "<b>" + Area_name + "</b>" + " <br/>" +
-                      village_name,
+                if i.active_flag != 'Active':
+                   print(i.name)
+                   address_lines = Paragraph(
+                      "<strike>" +
+                      "Usercode: " + i.usercode + "<br/>" +
+                      "<b>" + name + "</b><br/>" +
+                      i.address + ' ' + i.state + "<br/>" +
+                      "Mobile: " + i.mobile_no1 + ' / ' + i.mobile_no2 + "<br/>" +
+                      "Pincode: " + i.pincode + "<br/>" +
+                      "<b>" + Area_name + "</b><br/>" +
+                      "<b>" + village_name + "</b><br/>" +
+                      "Active Flag: " + i.active_flag  +
+                      "</strike>",
                       custom_style
                   )
+                else:
+                    address_lines = Paragraph(
+                          "Usercode: " + i.usercode + " <b>" + " <br/>" + name + "</b> " + " <br/>" +
+                          i.address + ' ' + i.state + " " + " <br/>" +
+                          "Mobile: " + i.mobile_no1 + ' / ' + i.mobile_no2 + " <br/>" +
+                          "Pincode: " + i.pincode + " <br/>" +
+                          "<b>" + Area_name + "</b>" + " <br/>" +
+                          village_name,
+                          custom_style
+                      )
             else:
                 if i.death_flag == "Yes":
                   address_lines = Paragraph(
@@ -124,7 +143,7 @@ def download_sticker_pdf(request, filterr, table_data):
 
 def download_split_sticker_pdf(request, filterr, table_data):
     response = HttpResponse(content_type='application/pdf')
-    response['Content-Disposition'] = 'attachment; filename="user.pdf"'
+    response['Content-Disposition'] = 'attachment; filename="download_split_sticker.pdf"'
     if table_data == "Main_User_Table":
       data_table = Main_User_Table
     else:
@@ -189,15 +208,31 @@ def download_split_sticker_pdf(request, filterr, table_data):
             village_name = "Village: " + i.village.village_name
             Area_name = "Area: " + i.area.area_name.capitalize()
             if table_data == "Main_User_Table":
-                address_lines = Paragraph(
-                      "Usercode: " + i.usercode + " <b>" + " <br/>" + name + "</b> " + " <br/>" +
-                      i.address + ' ' + i.state + " " + " <br/>" +
-                      "Mobile: " + i.mobile_no1 + ' / ' + i.mobile_no2 + " <br/>" +
-                      "Pincode: " + i.pincode + " <br/>" +
-                      "<b>" + Area_name + "</b>" + " <br/>" +
-                      village_name,
+                if i.active_flag != 'Active':
+                   print(i.name)
+                   address_lines = Paragraph(
+                      "<strike>" +
+                      "Usercode: " + i.usercode + "<br/>" +
+                      "<b>" + name + "</b><br/>" +
+                      i.address + ' ' + i.state + "<br/>" +
+                      "Mobile: " + i.mobile_no1 + ' / ' + i.mobile_no2 + "<br/>" +
+                      "Pincode: " + i.pincode + "<br/>" +
+                      "<b>" + Area_name + "</b><br/>" +
+                      "<b>" + village_name + "</b><br/>" +
+                      "Active Flag: " + i.active_flag  +
+                      "</strike>",
                       custom_style
                   )
+                else:
+                    address_lines = Paragraph(
+                          "Usercode: " + i.usercode + " <b>" + " <br/>" + name + "</b> " + " <br/>" +
+                          i.address + ' ' + i.state + " " + " <br/>" +
+                          "Mobile: " + i.mobile_no1 + ' / ' + i.mobile_no2 + " <br/>" +
+                          "Pincode: " + i.pincode + " <br/>" +
+                          "<b>" + Area_name + "</b>" + " <br/>" +
+                          village_name,
+                          custom_style
+                      )
             else:
                 if i.death_flag == "Yes":
                   address_lines = Paragraph(
@@ -246,7 +281,7 @@ def add_page_number(canvas, doc):
 
 def download_pdf(request, filterr, table_data):
     response = HttpResponse(content_type='application/pdf')
-    response['Content-Disposition'] = 'attachment; filename="user.pdf"'
+    response['Content-Disposition'] = 'attachment; filename="download.pdf"'
 
     doc = SimpleDocTemplate(response, pagesize=A4, title="Download PDF")
     elements = []
@@ -353,7 +388,7 @@ def download_pdf(request, filterr, table_data):
 
 def download_csv(request, filterr, table_data):
     response = HttpResponse(content_type='text/csv')
-    response['Content-Disposition'] = 'attachment; filename=user.csv'
+    response['Content-Disposition'] = 'attachment; filename=download.csv'
     writer = csv.writer(response)
     if table_data == "Main_User_Table":
       data_table = Main_User_Table
@@ -378,6 +413,39 @@ def download_csv(request, filterr, table_data):
 
     return response
 
+def download_csvarea(request):
+    # Query to get the desired information
+    response = HttpResponse(content_type='text/csv')
+    response['Content-Disposition'] = 'attachment; filename=download_csvarea.csv'
+    writer = csv.writer(response)
+    area_user_counts = (
+        Area.objects
+        .values('id', 'area_name')  # Select the fields you want to retrieve
+        .annotate(user_count=Count('main_user_table'))  # Count the number of users in each area
+    )
+    # Write header
+    writer.writerow(['Area ID', 'Area Name', 'User Count'])
+
+    # Write data rows
+    for data in area_user_counts:
+        writer.writerow([data['id'], data['area_name'], data['user_count']])
+
+    return response
+
+def download_csvvillage(request):
+    response = HttpResponse(content_type='text/csv')
+    response['Content-Disposition'] = 'attachment; filename=download_csvvillage.csv'
+    writer = csv.writer(response)
+    area_user_counts = Village.objects.all()
+    # Write header
+    writer.writerow(['Village ID', 'Village Name', 'User Count'])
+
+    # Write data rows
+    for data in area_user_counts:
+        print(data.id)
+        writer.writerow([data.id, data.village_name, data.usr_in_village])
+
+    return response
 
 def print_user(request):
         head = ['User Code','Name','Middle Name','Surname','Area','Village','Mobile No 1','Mobile No 2','Address','Active Status']
@@ -643,7 +711,12 @@ def add_area(request):
           formclass = Area_Form()
     else:
       formclass = Area_Form()
-    userview = Area.objects.all()
+
+    userview = (
+        Area.objects
+        .values('id', 'area_name')  # Select the fields you want to retrieve
+        .annotate(user_count=Count('main_user_table'))  # Count the number of users in each area
+    )
     paginator = Paginator(userview, 10)
     page_number = request.GET.get('page')
     page_obj = paginator.get_page(page_number)
