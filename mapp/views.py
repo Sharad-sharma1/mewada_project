@@ -739,6 +739,7 @@ def add_area(request):
     return render(request, 'staff/add_area.html', {'formclass':formclass, 'userview':page_obj, 'page_range':page_range})
   except Exception as e:
     print("exceptionnnnnnn", e)
+    return HttpResponse('An error occurred. Please try again.')
 
 def update_area(request, id):
   try:
